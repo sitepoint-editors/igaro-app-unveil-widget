@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Igaro App</title>
+<meta name="format-detection" content="telephone=no" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+<script>
+var __igaroapp = {
+    cdn : location.protocol === 'file:'? location.href+'/../cdn' : '/cdn',
+    msgIncompatible : _tr("Your device or software is too old. Please upgrade."),
+    msgErr : _tr("An unexpected error has occurred. Please email <b>app-support@igaro.com</b> for support."),
+    libs : {
+        load :[
+            { name:'conf.app.js' }
+        ],
+        local : [
+            { name:'3rdparty.fastclick.js' },
+            { name:'3rdparty.cordova.css' }
+        ],
+        touch : [
+            { name:'3rdparty.hammer.js' }
+        ],
+        fonts : [
+        ]
+    },
+    version: 0.1,
+    timestamp : new Date(),
+    debug : new RegExp("^(3006|3007)$").test(location.port)
+};
+var s,
+    head = document.getElementsByTagName('head')[0];
+if (location.protocol === 'file:') {
+    s = document.createElement('script');
+    s.src = "cordova.js";
+    head.appendChild(s);
+}
+if (! window.addEventListener) {
+    s = document.createElement('script');
+    s.src = __igaroapp.cdn + "/js/polyfill.ie.8.js";
+    head.appendChild(s);
+}
+if (! Array.prototype.map) {
+    s = document.createElement('script');
+    s.src = __igaroapp.cdn + "/js/polyfill.js.1.6.js";
+    head.appendChild(s);
+}
+if (!String.prototype.trim) {
+    s = document.createElement('script');
+    s.src = __igaroapp.cdn + "/js/polyfill.js.1.8.1.js";
+    head.appendChild(s);
+}
+if (! Object.keys) {
+    s = document.createElement('script');
+    s.src = __igaroapp.cdn + "/js/polyfill.js.1.8.5.js";
+    head.appendChild(s);
+}
+
+if (!( "classList" in document.createElement("_"))) {
+    s = document.createElement('script');
+    s.src = __igaroapp.cdn + "/js/polyfill.js.classList.js";
+    head.appendChild(s);
+}
+
+if (! window.Promise) {
+    s = document.createElement('script');
+    s.src = __igaroapp.cdn + "/js/polyfill.es6.js";
+    head.appendChild(s);
+}
+
+s = document.createElement('link');
+s.type = "text/css";
+s.rel = "stylesheet";
+s.href = __igaroapp.cdn + "/css/igaro.css";
+head.appendChild(s);
+</script>
+
+</head>
+<body>
+<base target="_blank" />
+<noscript>
+<p>Javascript is disabled. We can't load this application without it.</p>
+<p>Javascript está desactivado. No podemos cargar esta solicitud sin ella.</p>
+<p>تم تعطيل جافا سكريبت، ونحن لا يمكن تحميل هذا التطبيق دون ذلك.</p>
+</noscript>
+<script>
+var body = document.body,
+    bodyStyle = body.style,
+    resetOverflow = function(conf) {
+        if (! conf.noBodyStyleOverflowReset)
+            bodyStyle.overflow = '';
+    },
+    loading = document.createElement('div'),
+    loadingStatus = document.createElement('div');
+bodyStyle.overflow = 'hidden';
+loading.className = 'igaro-loading';
+body.appendChild(loading);
+loading.appendChild(loadingStatus);
+[
+    'Loading', // en
+    'Chargement', // french
+    'Cargando', // spanish
+    'جار التحميل', // arabic
+    '载入中' // chinese
+].forEach(function(txt) {
+    var p = document.createElement('p');
+    p.innerHTML = txt;
+    loadingStatus.appendChild(p);
+});
+
+__igaroapp.init = {
+    onProgress : function() {
+        loadingStatus.className = 'progress';
+    },
+    onReady : function(app,conf) {
+        setTimeout(function() {
+            body.removeChild(loading);
+            resetOverflow(conf);
+        }, 20);
+    },
+    onError : function(app,conf,e) {
+        loadingStatus.className = 'error';
+        resetOverflow(conf);
+        e = typeof e === 'object' && e.error && e.error.incompatible? conf.msgIncompatible : conf.msgErr;
+        loadingStatus.innerHTML = Object.keys(e).map(function(n) {
+           return e[n];
+        }).join("<p>");
+    }
+};
+
+var s = document.createElement('script');
+s.src = __igaroapp.cdn + "/js/igaro.js";
+document.getElementsByTagName('head')[0].appendChild(s);
+</script>
+
+</body>
+</html>

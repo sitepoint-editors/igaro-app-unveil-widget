@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<script src="vendor/mocha.js"></script>
+<link rel="stylesheet" href="vendor/mocha.css" />
+<script src="vendor/chai.js"></script>
+<script src="conf/base.js"></script>
+<script>
+
+mocha.setup('bdd');
+
+var assert = chai.assert;
+
+testSuite = function(app) {
+    var modName = 'core.country',
+        module = app[modName];
+
+    describe(modName, function() {
+
+        // add data - US + fake
+        before(function() {
+            return module.setPool({
+                "XX": {
+                  "callingCode": [
+                    "0"
+                  ],
+                  "currency": [
+                    "EUR",
+                  ],
+                  "name": { en:"Fake Country" }
+                },
+                "US": {
+                  "callingCode": [
+                    "1"
+                  ],
+                  "currency": [
+                    "USD",
+                  ],
+                  "name": { en:"United States" }
+                },
+            });
+        });
+
+        it("set country to FakeCountry",function() {
+            return module.setEnv('XX',true).then(function() {
+                assert.equal(module.env,'XX');
+            });
+        });
+
+        it("reset to auto detect (which will default to U.S).",function() {
+            return module.reset().then(function() {
+                assert.equal(module.env,'US');
+            });
+        });
+
+        it("shouldn't allow an invalid code to be set.",function(done) {
+            module.setEnv('QQ',true).then(function() {
+                done(new Error);
+            }).catch(function() {
+                done();
+            })
+        });
+    });
+
+    mocha.run();
+
+};
+
+</script>
+<script src="../../build/debug/cdn/js/igaro.js"></script>
+</head>
+<body>
+<div id="mocha"></div>
+</body>
+</html>

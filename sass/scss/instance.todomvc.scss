@@ -1,0 +1,119 @@
+.instance-todomvc {
+
+    max-width: 35em;
+    padding:1em;
+    margin:1em;
+    background: #fff;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
+                0 25px 50px 0 rgba(0, 0, 0, 0.1);
+
+    >* {
+        box-sizing: border-box;
+    }
+
+    >.header {
+        position:relative;
+        padding-bottom:0.5em;
+        >input[type="text"] {
+            font-style:italic;
+        }
+    }
+
+    >.header >input[type="text"], >.main >ul >li >span {
+        border:none;
+        box-shadow:none;
+        font-size:140%;
+        outline: none;
+        &:hover {
+            outline:none;
+            box-shadow:none;
+            border:none;
+        }
+        margin-left:0.5em;
+        width:80%;
+    }
+
+    >.main {
+        margin-bottom:1em;
+        border-top: 1px solid #ededed;
+        >ul {
+            padding-left:0;
+            >li {
+                padding:0.7em 0;
+                margin:0;
+                position:relative;
+                border-bottom: 1px solid #ededed;
+                list-style:none;
+                >button {
+                    float:right;
+                    color: #cc9a9a;
+                    min-width:0;
+                }
+            }
+        }
+    }
+
+    >.footer {
+
+        font-size:90%;
+        line-height:normal;
+        position:relative;
+        text-align:center;
+
+        >.filter {
+            display:inline-block;
+            >button {
+                min-width:0;
+                background:none;
+            }
+        }
+
+        >button {
+            position:absolute;
+            right:0;
+        }
+
+        >span {
+            position:absolute;
+            left:0;
+        }
+
+    }
+
+    &[data-filter="all"] {
+        >.footer >.filter >button:nth-child(1) {
+            border-color: rgba(175, 47, 47,.3);
+        }
+    }
+
+    &[data-filter="active"] {
+        >.main >ul >li[data-completed="true"] {
+            display:none;
+        }
+        >.footer >.filter >button:nth-child(2) {
+            border-color: rgba(175, 47, 47,.3);
+        }
+    }
+
+    &[data-filter="completed"] {
+        >.main >ul >li[data-completed="false"] {
+            display:none;
+        }
+        >.footer >.filter >button:nth-child(3) {
+            border-color: rgba(175, 47, 47,.3);
+        }
+    }
+
+    &[data-hasCompleted="false"] {
+        >.footer >button {
+            display:none;
+        }
+    }
+
+    &[data-hasItems="false"] {
+        >.header >input[type="checkbox"], >.main, >.footer {
+            display:none;
+        }
+    }
+}

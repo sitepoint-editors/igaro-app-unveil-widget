@@ -1,0 +1,13 @@
+.instance-unveil {
+  display:inline-block
+}
+
+.instance-unveil-loading {
+  background: inline-image("instance.unveil/loading.gif") no-repeat 50% 50%;
+  background-size: 3em;
+}
+
+.instance-unveil-error {
+  background: inline-image("instance.unveil/error.svg") no-repeat 50% 50%;
+  background-size: 3em;
+}
