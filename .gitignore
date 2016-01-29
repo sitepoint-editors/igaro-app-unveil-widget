@@ -1,0 +1,17 @@
+.*
+*.sublime-workspace
+*.sublime-project
+output
+*~
+phonegap/platforms
+build/
+.staging
+.sass-cache
+*.swp
+*.bak
+*.log
+node_modules
+tests/reports/
+tests/output/
+bin/
+lib/
